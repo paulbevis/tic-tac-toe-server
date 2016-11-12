@@ -1335,15 +1335,15 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-airbnb-base@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-8.0.0.tgz#c5e958a469ab8af76aff068b43d784e5afe74ca7"
+eslint-config-airbnb-base@^10.0.0:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-10.0.1.tgz#f17d4e52992c1d45d1b7713efbcd5ecd0e7e0506"
 
-eslint-config-airbnb@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-12.0.0.tgz#ab282b756a25f03d04ac264c24d673a08a803270"
+eslint-config-airbnb@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-13.0.0.tgz#688d15d3c276c0c753ae538c92a44397d76ae46e"
   dependencies:
-    eslint-config-airbnb-base "^8.0.0"
+    eslint-config-airbnb-base "^10.0.0"
 
 eslint-import-resolver-node@^0.2.0:
   version "0.2.3"
