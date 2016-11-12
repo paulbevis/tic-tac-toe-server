@@ -6,8 +6,8 @@ GraphQL server for tic tac toe, built using Apollo graphql-tools
 Clone the repository and run `npm install`
 
 ```
-git clone https://github.com/apollostack/frontpage-server
-cd frontpage-server
+git clone https://github.com/paulbevis/tic-tac-toe-server
+cd tic-tac-toe-server
 npm install
 ```
 
