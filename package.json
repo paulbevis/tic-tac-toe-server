@@ -1,7 +1,7 @@
 {
   "name": "tic-tac-toe-server",
   "version": "0.1.0",
-  "description": "GraphQL server for tic tac tow, built using Apollo graphql-tools",
+  "description": "GraphQL server for tic tac toe, built using Apollo graphql-tools",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1",
