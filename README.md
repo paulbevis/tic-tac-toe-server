@@ -1,5 +1,6 @@
 # tic-tac-toe-server
-GraphQL server for tic tac toe, built using Apollo graphql-tools
+
+GraphQL server for tic tac toe, built using Apollo graphql-tools.
 
 ## Installation
 
