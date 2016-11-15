@@ -11,7 +11,8 @@ type Counter {
 type Player {
   id: String!,
   status: String,
-  value: String
+  value: String,
+  name: String
   }
 
 type Cell{
