@@ -38,19 +38,20 @@ type Query {
 
 # this schema allows the following mutation:
 type Mutation {
-  registerPlayer(playerId: String!, gameBoardId: Int!): Player,
+  registerPlayer(playerId: String!, gameBoardId: Int!, playerName: String): Player,
   selectCell(playerValue: String!, cellId: Int!, gameBoardId: Int!): Cell,
   createNewGame:Int,
-  incrementCounter(increaseBy: Int!):Counter
+  incrementCounter(increaseBy: Int!):Counter,
+  joinGame( playerId: String!, playerName: String):Int
 }
 
 type Subscription {
   gameUpdated: Game,
+  gameJoined: Game,
   cellSelected: Game,
   newGameCreated: Game,
   counterChanged:Counter
-}
-`;
+}`;
 
 export default makeExecutableSchema({
   typeDefs: schema,
