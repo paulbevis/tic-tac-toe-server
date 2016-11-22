@@ -35,20 +35,29 @@ const checkIfGameOver = (game) => {
   const valueNotSet = cell => !propEq('value', 0)
   if (all(valueNotSet)(game.cells)) {
     game.status = 'Game Over';
-
-
+    pubsub.publish('gamestatusUpdated', game);
   }
-  var result = game.players.map((player)=> {
-    let winningRow = winningPatterns.filter(winningRowArray => {
-      return game.cells[winningRowArray[0]].value === player.id
-    })
-    if (winningRow.length === 3) {
-      player.status = 'Won';
-      game.status = 'Game Over';
+  const winningRowCheck = (winningRowArray) => {
+    return game.cells[winningRowArray[0]].value && game.cells[winningRowArray[0]].value === game.cells[winningRowArray[1]].value &&
+      game.cells[winningRowArray[1]].value === game.cells[winningRowArray[2]].value
+  };
+  let winningRow = find(winningRowCheck)(winningPatterns);
+  if (winningRow) {
+    game.status = 'Game Over';
+    game.cells[winningRow[0]].partOfWinLine = true;
+    game.cells[winningRow[1]].partOfWinLine = true;
+    game.cells[winningRow[2]].partOfWinLine = true;
+    if (game.players[0].value === winningRow[0].value) {
+      game.players[0].status = 'Won';
+      game.players[1].status = 'Lost';
     }
-
-  })
-  console.log('result for win: ', result);
+    if (game.players[1].value === winningRow[0].value) {
+      game.players[1].status = 'Won';
+      game.players[0].status = 'Lost';
+    }
+    console.log('IsGame Over? :', game)
+    pubsub.publish('gamestatusUpdated', counter);
+  }
 };
 
 const counter = {value: 0};
