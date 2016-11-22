@@ -40,7 +40,6 @@ type Query {
 
 # this schema allows the following mutation:
 type Mutation {
-  registerPlayer(playerId: String!, gameBoardId: Int!, playerName: String): Player,
   selectCell(playerValue: String!, cellId: Int!, gameBoardId: Int!): Cell,
   createNewGame:Int,
   incrementCounter(increaseBy: Int!):Counter,
