@@ -17,7 +17,8 @@ type Player {
 
 type Cell{
   id: Int!,
-  value: String 
+  value: String,
+  partOfWinLine: Boolean
 }
 
 type Game {
