@@ -24,7 +24,8 @@ type Game {
   id: Int!,
   players: [Player],
   cells: [Cell],
-  status: String
+  status: String,
+  nextTurn: Player
 }  
 
 
