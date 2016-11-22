@@ -48,6 +48,7 @@ type Mutation {
 
 type Subscription {
   gameUpdated: Game,
+  gameStatusUpdated: Game,
   gameJoined: Game,
   cellSelected: Game,
   newGameCreated: Game,
