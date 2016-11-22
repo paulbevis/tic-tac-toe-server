@@ -115,7 +115,6 @@ const resolveFunctions = {
       return game.id;
     }
 
-
   },
   Subscription: {
     gameUpdated(game) {
