@@ -98,14 +98,16 @@ const resolveFunctions = {
       const onlyOnePlayerThatIsNotYou = (game)=>game.players.length === 1 && game.players[0].id !== playerId;
       let game = find(onlyOnePlayerThatIsNotYou)(games);
       if (!game) {
-        console.log('Creating new game...')
         game = createNewGame();
         games.push(game);
       } else {
         console.log('game exists: ')
+        game.status = 'Playing';
+        pubsub.publish('gamestatusUpdated', game);
       }
       if (game.players.length === 0) {
         player.value = 'X';
+        game.nextTurn = player;
       } else {
         player.value = 'O';
       }
