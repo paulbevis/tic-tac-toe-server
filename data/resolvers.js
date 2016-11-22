@@ -87,6 +87,8 @@ const resolveFunctions = {
       if (!game.cells[cellId].value) {
         game.cells[cellId].value = playerValue;
         checkIfGameOver(game);
+        game.nextTurn = game.nextTurn === game.players[0] ? game.players[1] : game.players[0];
+        console.log('game updated....')
         pubsub.publish('gameUpdated', game);
       }
 
