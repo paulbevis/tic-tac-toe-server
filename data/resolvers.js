@@ -81,32 +81,6 @@ const resolveFunctions = {
       pubsub.publish('counterChanged', counter);
       return counter
     },
-    registerPlayer(_, {playerId, gameBoardId, playerName}) {
-      const game = games[gameBoardId];
-      if (game.players.length === 2) {
-        game.players = [];
-      }
-      if (game.players.length === 1 && game.players[0].id !== playerId) {
-        game.players.push({id: playerId, value: 'O', name: playerName})
-        if (game.players.length === 2) {
-          game.status = 'Playing';
-        } else {
-          game.status = 'Waiting';
-        }
-        // pubsub.publish('gameUpdated', game);
-      }
-      if (game.players.length === 0) {
-        game.players.push({id: playerId, value: 'X', name: playerName});
-        const resetCellValue = (cell)=> {
-          cell.value = '';
-          return cell
-        };
-        game.cells = map(resetCellValue, game.cells);
-
-        // pubsub.publish('gameUpdated', game);
-      }
-      return game.players[game.players.length - 1];
-    },
 
     selectCell(_, {playerValue, cellId, gameBoardId}) {
       const game = games[gameBoardId];
