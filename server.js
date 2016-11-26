@@ -34,6 +34,10 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 
 // WebSocket server for subscriptions
 const websocketServer = createServer((request, response) => {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Request-Method', '*');
+  res.setHeader('Access-Control-Allow-Headers', req.header.origin);
   response.writeHead(404);
   response.end();
 });
