@@ -3,7 +3,6 @@ import {makeExecutableSchema} from 'graphql-tools';
 import resolvers from './resolvers';
 
 const schema = `
-
 type Counter {
   value: Int
 }
@@ -12,8 +11,9 @@ type Player {
   id: String!,
   status: String,
   value: String,
-  name: String
-  }
+  name: String,
+  browserId: String
+}
 
 type Cell{
   id: Int!,
@@ -30,7 +30,6 @@ type Game {
 }  
 
 
-
 # the schema allows the following query:
 type Query {
   specificGameBoard(gameBoardId: Int!): Game,
@@ -43,16 +42,12 @@ type Mutation {
   selectCell(playerValue: String!, cellId: Int!, gameBoardId: Int!): Cell,
   createNewGame:Int,
   incrementCounter(increaseBy: Int!):Counter,
-  joinGame( playerId: String!, playerName: String):Int
+  joinGame( browserId: String, playerId: String!, playerName: String):Int
 }
 
 type Subscription {
   gameUpdated: Game,
-  gameStatusUpdated: Game,
-  gameJoined: Game,
-  cellSelected: Game,
   newGameCreated: Game,
-  counterChanged:Counter
 }`;
 
 export default makeExecutableSchema({

@@ -1,4 +1,4 @@
-import {all, find, map, propEq} from 'ramda';
+import {all, find, has, map, propEq} from 'ramda';
 import {pubsub} from './subscriptions';
 
 
@@ -11,8 +11,8 @@ const winningPatterns = [
 const games = [];
 
 
-const createNewGame = function() {
-  const game = {
+const createNewGame = () => {
+  return {
     id: games.length,
     status: 'Waiting',
     players: [],
@@ -28,84 +28,80 @@ const createNewGame = function() {
       {id: 8}
     ]
   };
-  return game;
 };
 
-const checkIfGameOver = (game) => {
-  const valueNotSet = cell => !propEq('value', 0)
-  if (all(valueNotSet)(game.cells)) {
-    game.status = 'Game Over';
-    pubsub.publish('gamestatusUpdated', game);
+const updateGame = (game, winningRow) => {
+  game.status = 'Game Over';
+  game.cells[winningRow[0]].partOfWinLine = true;
+  game.cells[winningRow[1]].partOfWinLine = true;
+  game.cells[winningRow[2]].partOfWinLine = true;
+  console.log('winning row: ',winningRow)
+  if (game.players[0].value === game.cells[winningRow[0]].value) {
+    game.players[0].status = 'Won1';
+    game.players[1].status = 'Lost...';
   }
+  if (game.players[1].value === game.cells[winningRow[0]].value) {
+    game.players[1].status = 'Won!';
+    game.players[0].status = 'Lost...';
+  }
+}
+
+const getWinningRow = (game) => {
   const winningRowCheck = (winningRowArray) => {
     return game.cells[winningRowArray[0]].value && game.cells[winningRowArray[0]].value === game.cells[winningRowArray[1]].value &&
       game.cells[winningRowArray[1]].value === game.cells[winningRowArray[2]].value
   };
-  let winningRow = find(winningRowCheck)(winningPatterns);
+  return find(winningRowCheck)(winningPatterns);
+}
+const checkIfGameOver = (game) => {
+  let winningRow = getWinningRow(game);
   if (winningRow) {
-    game.status = 'Game Over';
-    game.cells[winningRow[0]].partOfWinLine = true;
-    game.cells[winningRow[1]].partOfWinLine = true;
-    game.cells[winningRow[2]].partOfWinLine = true;
-    if (game.players[0].value === winningRow[0].value) {
-      game.players[0].status = 'Won';
-      game.players[1].status = 'Lost';
+    updateGame(game, winningRow);
+  } else {
+    const valueNotSet = has('value')
+    if (all(valueNotSet)(game.cells)) {
+      game.status = 'Game Over - It was a draw!';
     }
-    if (game.players[1].value === winningRow[0].value) {
-      game.players[1].status = 'Won';
-      game.players[0].status = 'Lost';
-    }
-    console.log('IsGame Over? :', game)
-    pubsub.publish('gamestatusUpdated', counter);
   }
 };
 
-const counter = {value: 0};
+const findGameAvailableToJoin = (browserId, playerId) => {
+  const onlyOnePlayerThatIsNotYou = (game)=> game.players.length === 1 && game.players[0].browserId !== browserId;
+  return find(onlyOnePlayerThatIsNotYou)(games);
+};
+
 const resolveFunctions = {
   Query: {
     specificGameBoard(_, {gameBoardId}){
       return games[gameBoardId];
     },
     firstAvailableGameBoard(){
-      console.log('firstAvailableGameBoard called: result: ', games);
       return find(propEq('status', 'Waiting'))(games)
-    },
-    currentCounterResult(){
-      return counter;
     }
-
   },
-  Mutation: {
-    incrementCounter(_, {increaseBy}){
-      counter.value = counter.value + increaseBy;
-      pubsub.publish('counterChanged', counter);
-      return counter
-    },
 
+  Mutation: {
     selectCell(_, {playerValue, cellId, gameBoardId}) {
       const game = games[gameBoardId];
       if (!game.cells[cellId].value) {
         game.cells[cellId].value = playerValue;
-        checkIfGameOver(game);
         game.nextTurn = game.nextTurn === game.players[0] ? game.players[1] : game.players[0];
-        console.log('game updated....')
+        checkIfGameOver(game);
+        console.log('selectCell:   ', game)
         pubsub.publish('gameUpdated', game);
       }
-
       return game.cells[cellId];
     },
-
-    joinGame(_, {playerId, playerName}) {
-      const player = {id: playerId, name: playerName}
-      const onlyOnePlayerThatIsNotYou = (game)=>game.players.length === 1 && game.players[0].id !== playerId;
-      let game = find(onlyOnePlayerThatIsNotYou)(games);
+    joinGame(_, {browserId, playerId, playerName}) {
+      const player = {id: playerId, name: playerName, browserId}
+      let game = findGameAvailableToJoin(browserId, playerId);
       if (!game) {
         game = createNewGame();
         games.push(game);
+        console.log('created new game')
       } else {
-        console.log('game exists: ')
         game.status = 'Playing';
-        pubsub.publish('gamestatusUpdated', game);
+        // pubsub.publish('gameUpdated', game);
       }
       if (game.players.length === 0) {
         player.value = 'X';
@@ -114,30 +110,20 @@ const resolveFunctions = {
         player.value = 'O';
       }
       game.players.push(player);
-      pubsub.publish('gameJoined', game);
-
+      pubsub.publish('gameUpdated', game);
+      console.log('game joined ',game)
       return game.id;
     }
-
   },
+
   Subscription: {
     gameUpdated(game) {
       return game;
     },
-    cellSelected(game)
-    {
+    newGameCreated(game) {
       return game;
     },
-    newGameCreated(game)
-    {
-      return game;
-    },
-    counterChanged(counter)
-    {
-      return counter;
-    },
-    gameJoined(game)
-    {
+    gameUpdated(game){
       return game;
     }
   }
