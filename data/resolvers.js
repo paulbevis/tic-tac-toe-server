@@ -37,7 +37,7 @@ const updateGame = (game, winningRow) => {
   game.cells[winningRow[2]].partOfWinLine = true;
   console.log('winning row: ',winningRow)
   if (game.players[0].value === game.cells[winningRow[0]].value) {
-    game.players[0].status = 'Won1';
+    game.players[0].status = 'Won!';
     game.players[1].status = 'Lost...';
   }
   if (game.players[1].value === game.cells[winningRow[0]].value) {
