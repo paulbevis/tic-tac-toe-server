@@ -1,12 +1,12 @@
 import express from 'express';
-import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import {graphqlExpress, graphiqlExpress} from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { createServer } from 'http';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { printSchema } from 'graphql/utilities/schemaPrinter';
+import {createServer} from 'http';
+import {SubscriptionServer} from 'subscriptions-transport-ws';
+import {printSchema} from 'graphql/utilities/schemaPrinter';
 
-import { subscriptionManager } from './data/subscriptions';
+import {subscriptionManager} from './data/subscriptions';
 import schema from './data/schema';
 
 const GRAPHQL_PORT = 8181;
@@ -48,6 +48,8 @@ websocketServer.listen(WS_PORT, () => console.log( // eslint-disable-line no-con
 
 // eslint-disable-next-line
 new SubscriptionServer(
-  { subscriptionManager },
+  {
+    subscriptionManager,
+  },
   websocketServer
 );
