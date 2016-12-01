@@ -46,7 +46,7 @@ type Mutation {
 }
 
 type Subscription {
-  gameUpdated: Game,
+  gameUpdated(gameBoardId: Int!): Game,
   newGameCreated: Game,
 }`;
 
