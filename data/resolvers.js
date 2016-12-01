@@ -81,27 +81,27 @@ const resolveFunctions = {
   },
 
   Mutation: {
-    selectCell(_, {playerValue, cellId, gameBoardId}) {
+    selectCell(_, {playerValue, cellId, gameBoardId}, context) {
+      console.log('select Cell context: ',context)
       const game = games[gameBoardId];
       if (!game.cells[cellId].value) {
         game.cells[cellId].value = playerValue;
         game.nextTurn = game.nextTurn === game.players[0] ? game.players[1] : game.players[0];
         checkIfGameOver(game);
-        console.log('selectCell:   ', game)
         pubsub.publish('gameUpdated', game);
       }
       return game.cells[cellId];
     },
-    joinGame(_, {browserId, playerId, playerName}) {
+    joinGame(_, {browserId, playerId, playerName}, context) {
+      console.log('join game Cell context: ',context)
+
       const player = {id: playerId, name: playerName, browserId}
       let game = findGameAvailableToJoin(browserId, playerId);
       if (!game) {
         game = createNewGame();
         games.push(game);
-        console.log('created new game')
       } else {
         game.status = 'Playing';
-        // pubsub.publish('gameUpdated', game);
       }
       if (game.players.length === 0) {
         player.value = 'X';
@@ -110,20 +110,15 @@ const resolveFunctions = {
         player.value = 'O';
       }
       game.players.push(player);
+      console.log('joining game...')
       pubsub.publish('gameUpdated', game);
-      console.log('game joined ',game)
       return game.id;
     }
   },
 
   Subscription: {
-    gameUpdated(game) {
-      return game;
-    },
-    newGameCreated(game) {
-      return game;
-    },
     gameUpdated(game){
+      console.log('Subscription: gameUpdated: ')
       return game;
     }
   }
