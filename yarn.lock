@@ -17,7 +17,7 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-0.0.29.tgz#fbcfd330573b912ef59eeee14602bface630754b"
 
-"@types/node@*", "@types/node@^6.0.38":
+"@types/node@*":
   version "6.0.50"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.50.tgz#211c61ef6e0c79c466e9755a75d50496aaf94bea"
 
@@ -1799,13 +1799,6 @@ graphql-server-module-graphiql@^0.4.3:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/graphql-server-module-graphiql/-/graphql-server-module-graphiql-0.4.3.tgz#f82b92b99bb1e1b4b285c86bf6fcfa60b3a7a805"
 
-graphql-subscriptions@^0.1.3:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/graphql-subscriptions/-/graphql-subscriptions-0.1.5.tgz#603422c0a7ea3818b630751d1c9798bfa1a820ee"
-  dependencies:
-    es6-promise "^3.2.1"
-    graphql "^0.7.0"
-
 graphql-subscriptions@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/graphql-subscriptions/-/graphql-subscriptions-0.2.1.tgz#9c46fdee043b2a51b7aaa61f8645c25410d806e4"
@@ -2456,10 +2449,6 @@ node-pre-gyp@^0.6.29:
     semver "~5.3.0"
     tar "~2.2.1"
     tar-pack "~3.3.0"
-
-node-static@0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/node-static/-/node-static-0.5.9.tgz#2f5bf30949e1735958266c269413aebce8cbe899"
 
 node-uuid@^1.4.7:
   version "1.4.7"
@@ -3196,17 +3185,14 @@ strip-json-comments@~1.0.1, strip-json-comments@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-1.0.4.tgz#1e15fbcac97d3ee99bf2d73b4c656b082bbafb91"
 
-subscriptions-transport-ws@^0.2.2:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.2.6.tgz#433861167c25ef9a2b8697e9403afa2a77656cb3"
+subscriptions-transport-ws@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/subscriptions-transport-ws/-/subscriptions-transport-ws-0.3.1.tgz#b263d0147d47a1d109487633cf940a7907a9bdc0"
   dependencies:
-    "@types/node" "^6.0.38"
     backo2 "^1.0.2"
-    es6-promise "^3.2.1"
-    graphql-subscriptions "^0.1.3"
+    graphql-subscriptions "^0.2.0"
     lodash.isobject "^3.0.2"
     lodash.isstring "^4.0.1"
-    node-static "0.5.9"
     websocket "^1.0.23"
 
 supports-color@^2.0.0:
