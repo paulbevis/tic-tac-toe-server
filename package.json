@@ -4,7 +4,7 @@
   "description": "GraphQL server for tic tac toe, built using Apollo graphql-tools",
   "scripts": {
     "start": "nodemon ./server.js --exec babel-node",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "eslint ."
   },
   "repository": {
@@ -49,6 +49,7 @@
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-react": "^6.4.1",
+    "jest-cli": "^17.0.3",
     "nodemon": "^1.9.1"
   },
   "eslintConfig": {
@@ -65,6 +66,9 @@
     },
     "env": {
       "mocha": true
+    },
+    "jest": {
+      "testEnvironment": "test"
     }
   }
 }
