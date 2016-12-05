@@ -6,8 +6,8 @@ import {createServer} from 'http';
 import {SubscriptionServer} from 'subscriptions-transport-ws';
 import {printSchema} from 'graphql/utilities/schemaPrinter';
 
-import {subscriptionManager} from './data/subscriptions';
-import schema from './data/schema';
+import {subscriptionManager} from './js/subscriptions';
+import schema from './js/schema';
 
 const GRAPHQL_PORT = 8181;
 const WS_PORT = 8090;

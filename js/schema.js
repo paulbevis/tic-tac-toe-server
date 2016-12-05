@@ -9,7 +9,7 @@ type Counter {
 
 type Player {
   id: String!,
-  status: String,
+  endStatus: PlayerEndState,
   value: String,
   name: String,
   browserId: String
@@ -21,11 +21,29 @@ type Cell{
   partOfWinLine: Boolean
 }
 
+enum GameStatus {
+  WAITING,
+  PLAYING,
+  GAME_OVER,
+  GAME_ABANDONED
+}
+
+enum PlayerEndState{
+  WON,
+  LOST,
+  DREW
+}
+
+type Status {
+  code: GameStatus!,
+  description: String!
+}
+
 type Game {
   id: Int!,
   players: [Player],
   cells: [Cell],
-  status: String,
+  status: Status!,
   nextTurn: Player
 }  
 
@@ -40,7 +58,6 @@ type Query {
 # this schema allows the following mutation:
 type Mutation {
   selectCell(playerValue: String!, cellId: Int!, gameBoardId: Int!): Cell,
-  createNewGame:Int,
   incrementCounter(increaseBy: Int!):Counter,
   joinGame( browserId: String, playerId: String!, playerName: String):Int
 }
