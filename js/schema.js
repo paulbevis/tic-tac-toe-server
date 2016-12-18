@@ -29,9 +29,9 @@ enum GameStatus {
 }
 
 enum PlayerEndState{
-  WON,
-  LOST,
-  DREW
+  Won,
+  Lost,
+  Drew
 }
 
 type Status {

@@ -2,7 +2,6 @@ import {all, find, has, map, propEq} from 'ramda';
 import {pubsub} from './subscriptions';
 
 import * as data from './data';
-
 export let games = [];
 
 
@@ -31,12 +30,17 @@ const updateGame = (game, winningRow) => {
   game.cells[winningRow[1]].partOfWinLine = true;
   game.cells[winningRow[2]].partOfWinLine = true;
   if (game.players[0].value === game.cells[winningRow[0]].value) {
-    game.players[0].status = 'Won!';
-    game.players[1].status = 'Lost...';
-  }
-  if (game.players[1].value === game.cells[winningRow[0]].value) {
-    game.players[1].status = 'Won!';
-    game.players[0].status = 'Lost...';
+    game.players[0].endStatus = 'Won';
+    game.players[1].endStatus = 'Lost';
+  } else {
+    if (game.players[1].value === game.cells[winningRow[0]].value) {
+      game.players[1].endStatus = 'Won';
+      game.players[0].endStatus = 'Lost';
+    }       else{
+      game.players[0].endStatus = 'Drew';
+      game.players[1].endStatus = 'Drew';
+
+    }
   }
 };
 
