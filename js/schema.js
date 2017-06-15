@@ -52,7 +52,8 @@ type Game {
 type Query {
   specificGameBoard(gameBoardId: Int!): Game,
   firstAvailableGameBoard: Game,
-  currentCounterResult:Counter
+  currentCounterResult:Counter,
+  allBoards:[Game]
 }
 
 # this schema allows the following mutation:

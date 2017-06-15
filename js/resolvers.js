@@ -109,6 +109,9 @@ const resolveFunctions = {
     },
     firstAvailableGameBoard(){
       return find(propEq('status', 'Waiting'))(games)
+    },
+    allBoards(){
+      return games;
     }
   },
 
