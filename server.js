@@ -8,16 +8,25 @@ import {printSchema} from 'graphql/utilities/schemaPrinter';
 
 import {subscriptionManager} from './js/subscriptions';
 import schema from './js/schema';
+import OpticsAgent from 'optics-agent';
 
 const GRAPHQL_PORT = 8181;
 const WS_PORT = 8090;
 
+
+OpticsAgent.instrumentSchema(schema);
+
+
 const graphQLServer = express().use('*', cors());
 
-graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
+
+graphQLServer.use('/graphql', OpticsAgent.middleware());
+
+graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress(request => ({
   schema,
-  context: {},
-}));
+  context: {opticsContext: OpticsAgent.context(request)},
+})));
+
 
 graphQLServer.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
